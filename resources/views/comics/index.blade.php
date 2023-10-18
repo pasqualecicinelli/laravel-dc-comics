@@ -2,6 +2,9 @@
 
 @section('main-content')
     <section class="container mt-5">
+
+        <a href={{ route('comics.create') }} class="btn btn-primary my-2">Aggiungi un nuovo Fumetto</a>
+
         @foreach ($comics as $comic)
             <ul class="list-group mt-5 w-50">
 
