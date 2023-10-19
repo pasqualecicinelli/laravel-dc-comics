@@ -16,13 +16,11 @@ class ComicsTableSeeder extends Seeder
     public function run()
     {
 
-        // Passare i dati non funziona
-
         $_comics = config("comics");
 
         foreach ($_comics as $_comic) {
 
-
+            //  $comic = new Comic();
 
             //$comic->title = $_comic['title'];
             // $comic->description = $_comic['description'];
