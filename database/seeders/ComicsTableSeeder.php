@@ -15,9 +15,9 @@ class ComicsTableSeeder extends Seeder
      */
     public function run()
     {
-        $comics = new Comic();
+        $comic = new Comic();
 
 
-        $comics->save();
+        $comic->save();
     }
 }
