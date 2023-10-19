@@ -8,6 +8,7 @@
         <a href={{ route('comics.index') }} class="btn btn-primary my-3">Indietro</a>
         <a href={{ route('comics.edit', $comic) }} class="btn btn-warning my-3">Modifica</a>
 
+
         <div class="col-6">
             <div class="card my-2">
                 <div class="card-title text-center">

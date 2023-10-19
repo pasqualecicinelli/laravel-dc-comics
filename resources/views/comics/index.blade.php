@@ -13,10 +13,20 @@
             <ul class="list-group mt-5 w-50">
 
                 <li class="list-group-item ">
-                    <strong>Titolo:</strong> {{ $comic->title }} <a href={{ route('comics.show', $comic->id) }}><i
-                            class="fa-solid fa-eye"></i> </a>
+                    <strong>Titolo:</strong> {{ $comic->title }}
 
-                    <a href={{ route('comics.edit', $comic) }}><i class="fa-solid fa-pen-to-square"></i></a>
+                    <a href={{ route('comics.show', $comic) }}><i class="fa-solid fa-eye"></i></a>
+
+                    <a href={{ route('comics.edit', $comic) }}><i
+                            class="fa-solid text-warning fa-pen-to-square px-2"></i></a>
+
+                    <form action="{{ route('comics.destroy', $comic) }}" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button><i class="fa-solid text-danger fa-trash-can"></i></button>
+
+                    </form>
+
                 </li>
                 <li class="list-group-item">
                     <strong>Descrizione:</strong> {{ $comic->description }}
