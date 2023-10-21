@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('main-content')
-    <section class="container mt-5">
+    <section class="container my-3">
 
         <h1 class="my-2"> Mostra i Fumetti</h1>
 
@@ -15,9 +15,9 @@
                 <li class="list-group-item ">
                     <strong>Id:</strong> {{ $comic->id }}
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item d-flex">
 
-                    <strong>Titolo:</strong> {{ $comic->title }}
+                    <div class="flex-grow-1"><strong>Titolo:</strong> {{ $comic->title }}</div>
 
                     <a href={{ route('comics.show', $comic) }}><i class="fa-solid fa-eye"></i></a>
 
@@ -30,39 +30,6 @@
                         <i class="fa-solid text-danger fa-trash-can"></i>
                     </a>
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="delete-modal-{{ $comic->id }}" tabindex="-1"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModal"> Vuoi eliminare
-                                        questo fumetto?
-                                    </h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    {{ $comic->title }}
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Annulla</button>
-
-
-                                    <form action="{{ route('comics.destroy', $comic) }}" method="POST">
-                                        @method('DELETE')
-                                        @csrf
-                                        <button class="btn btn-danger">Elimina</button>
-
-                                    </form>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
                 </li>
                 <li class="list-group-item">
                     <strong>Descrizione:</strong> {{ $comic->description }}
@@ -71,6 +38,36 @@
                     <strong>Prezzo:</strong> {{ $comic->price }}
                 </li>
             </ul>
+
+            <!-- Modal -->
+            <div class="modal fade" id="delete-modal-{{ $comic->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModal"> Vuoi eliminare
+                                questo fumetto?
+                            </h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            {{ $comic->title }}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+
+
+                            <form action="{{ route('comics.destroy', $comic) }}" method="POST">
+                                @method('DELETE')
+                                @csrf
+                                <button class="btn btn-danger">Elimina</button>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         @endforeach
 
     </section>
