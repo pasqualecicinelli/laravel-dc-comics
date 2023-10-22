@@ -29,8 +29,8 @@
             @enderror
 
             <label for="price" class="mt-4">Prezzo</label>
-            <input class="form-control mt-2 @error('price') is-invalid @enderror" type="text" id="price"
-                name="price" placeholder="Prezzo" aria-label="default input example"
+            <input class="form-control mt-2 @error('price') is-invalid @enderror" type="number" step="any"
+                id="price" name="price" placeholder="Prezzo" aria-label="default input example"
                 value={{ old('price') ?? $comic->price }}>
 
             @error('price')
@@ -48,6 +48,7 @@
                 @enderror
 
             </div>
+
 
             <label for="series" class="mt-4">Serie</label>
             <input class="form-control mt-2 @error('series') is-invalid @enderror" type="text" id="series"
@@ -86,9 +87,9 @@
 
             <button class="btn btn-success my-3">Salva</button>
 
+            <a href="{{ route('comics.index') }}" class="btn btn-primary my-3">Torna ai Fumetti</a>
         </form>
 
-        <a href="{{ route('comics.index') }}" class="btn btn-primary my-3">Torna ai Fumetti</a>
 
     </section>
 @endsection

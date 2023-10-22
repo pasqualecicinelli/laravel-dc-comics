@@ -16,7 +16,10 @@ class ComicController extends Controller
     public function index()
     {
 
-        $comics = Comic::all();
+
+        // $comics = Comic::all();
+
+        $comics = Comic::paginate(4);
         return view("comics.index", compact("comics"));
     }
 
@@ -116,11 +119,11 @@ class ComicController extends Controller
             $data,
             [
                 'title' => 'required|string|max:50',
-                'description' => 'required|string',
+                'description' => 'string',
                 'thumb' => 'required|string',
-                'price' => 'required|string',
+                'price' => 'required|numeric|between:0,99.99',
                 'series' => 'required|string|max:50',
-                'sale_date' => 'required|string',
+                'sale_date' => 'required|string|max:11',
                 'type' => 'required|string',
 
             ],
@@ -130,14 +133,13 @@ class ComicController extends Controller
                 'title.string' => 'Il titolo deve essere una stringa',
                 'title.max' => 'Titolo troppo lungo massimo 50 caratteri',
 
-                'description.required' => 'La descrizione è obbligatoria',
                 'description.string' => 'La descrizione deve essere una stringa',
 
                 'thumb.required' => 'Il thumb è obbligatorio',
                 'thumb.string' => 'La thumb deve essere un URL',
 
                 'price.required' => 'Il prezzo è obbligatorio',
-                'price.string' => 'Il prezzo deve essere un numero',
+                'price.float' => 'Il prezzo deve essere un numero max di 99,99',
 
                 'series.required' => 'La serie è obbligatoria',
                 'series.string' => 'La serie deve essere una stringa',
@@ -146,6 +148,7 @@ class ComicController extends Controller
 
                 'sale_date.required' => 'La data è obbligatoria',
                 'sale_date.string' => 'La data deve essere una stringa',
+                'sale_date.max' => 'La data deve essere espressa in numeri',
 
                 'type.required' => 'Il genere è obbligatorio',
                 'type.string' => 'Il genere deve essere una stringa',
