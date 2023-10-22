@@ -86,7 +86,7 @@ class ComicController extends Controller
      */
     public function update(Request $request, Comic $comic)
     {
-        // $data = $request->all();      , $comic->id
+        // $data = $request->all();      
         $data = $this->validation($request->all());
 
         $comic->update($data);
@@ -120,10 +120,10 @@ class ComicController extends Controller
             [
                 'title' => 'required|string|max:50',
                 'description' => 'string',
-                'thumb' => 'required|string',
+                'thumb' => 'required|url',
                 'price' => 'required|numeric|between:0,99.99',
                 'series' => 'required|string|max:50',
-                'sale_date' => 'required|string|max:11',
+                'sale_date' => 'required|date|max:10',
                 'type' => 'required|string',
 
             ],
@@ -136,7 +136,7 @@ class ComicController extends Controller
                 'description.string' => 'La descrizione deve essere una stringa',
 
                 'thumb.required' => 'Il thumb è obbligatorio',
-                'thumb.string' => 'La thumb deve essere un URL',
+                'thumb.url' => 'La thumb deve essere un URL',
 
                 'price.required' => 'Il prezzo è obbligatorio',
                 'price.float' => 'Il prezzo deve essere un numero max di 99,99',
@@ -147,7 +147,7 @@ class ComicController extends Controller
 
 
                 'sale_date.required' => 'La data è obbligatoria',
-                'sale_date.string' => 'La data deve essere una stringa',
+                'sale_date.date' => 'La data deve essere numerica e separata dal simbolo " - " Esempio 01-01-1999 ',
                 'sale_date.max' => 'La data deve essere espressa in numeri',
 
                 'type.required' => 'Il genere è obbligatorio',
