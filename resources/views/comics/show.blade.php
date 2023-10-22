@@ -20,7 +20,7 @@
                     <div class="card border-0 m-2">
                         <div class="card-title">
                             <h4>Prezzo: </h4>
-                            <div>{{ $comic->price }}</div>
+                            <div>${{ $comic->price }}</div>
                         </div>
                     </div>
                     <div class="card border-0 m-2">

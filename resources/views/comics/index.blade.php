@@ -29,7 +29,7 @@
                             <td>{{ $comic->series }}</td>
                             <td>{{ $comic->type }}</td>
                             <td>{{ $comic->sale_date }}</td>
-                            <td>{{ $comic->price }}</td>
+                            <td>${{ $comic->price }}</td>
                             <td style="min-width: 100px">
                                 <a href={{ route('comics.show', $comic) }}><i class="fa-solid fa-eye"></i></a>
                                 <a href={{ route('comics.edit', $comic) }}><i

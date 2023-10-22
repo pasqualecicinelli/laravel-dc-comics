@@ -26,8 +26,9 @@
             @enderror
 
             <label for="price" class="mt-4">Prezzo</label>
-            <input class="form-control mt-2 @error('price') is-invalid @enderror" type="text" id="price"
-                name="price" placeholder="Prezzo" aria-label="default input example" value={{ old('price') }}>
+            <input class="form-control mt-2 @error('price') is-invalid @enderror" type="number" step="any"
+                id="price" name="price" placeholder="Prezzo" aria-label="default input example"
+                value={{ old('price') }}>
             @error('price')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
