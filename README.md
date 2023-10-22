@@ -45,15 +45,16 @@ php artisan key:generate
 
 2. Apro [PHPMyAdmin](http://localhost/phpMyAdmin/?lang=en)
 
-3. Creo un nuovo DB (es. `103_rent`)
+3. Creo un nuovo DB (es. `db-comics`)
 
 4. nel file `.env` aggiungo i parametri di connessione presenti sulla [pagina iniziale di MAMP](http://localhost/MAMP/)
 
 ```
+APP_NAME="Laravel DC Comics"
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=103_rent
+DB_DATABASE=comics
 DB_USERNAME=root
 DB_PASSWORD=root
 ```
@@ -69,22 +70,19 @@ php artisan make:migration create_houses_table
 Aggiungi poi tutte le colonne che rappresentano la tabella nella funzione `up()`. I tipi di dato disponibili sono [qui](https://laravel.com/docs/9.x/migrations#available-column-types)
 
 ```php
-// create_houses_table
+// create_comics_table
 
 public function up()
   {
-    Schema::create('houses', function (Blueprint $table) {
-      $table->id();
-      $table->tinyInteger('rooms')->unsigned();
-      $table->tinyInteger('bathrooms')->unsigned();
-      $table->smallInteger('square_meters')->unsigned();
-      $table->enum('type', ['appartment', 'independent', 'villa']);
-      $table->string('address', 100);
-      $table->string('city', 50);
-      $table->string('state', 50);
-      $table->string('zipcode', 15);
-      $table->text('description');
-      $table->float('price', 5, 2);
+   Schema::create('comics', function (Blueprint $table) {
+            $table->id();
+            $table->string('title', 50);
+            $table->text('description')->nullable();
+            $table->text('thumb');
+            $table->float('price', 4, 2);
+            $table->string('series', 50);
+            $table->string('sale_date', 11);
+            $table->string('type');
       $table->timestamps();
     });
   }
@@ -105,15 +103,15 @@ Aggiungo un paio di righe da [PHPMyAdmin](http://localhost/phpMyAdmin/?lang=en) 
 Creo un Model che rappresenti la tabella appena realizzata con il comando
 
 ```
-php artisan make:model House
+php artisan make:model Comic
 ```
 
 ## Creazione di un Controller per la risorsa
 
-Creo un Controller per la risorsa `House` con il comando
+Creo un Controller per la risorsa `Comic` con il comando
 
 ```
-php artisan make:controller HouseController
+php artisan make:controller ComicController
 ```
 
 Importo il controller nel file `routes/web.php` per assegnargli delle rotte
@@ -121,39 +119,49 @@ Importo il controller nel file `routes/web.php` per assegnargli delle rotte
 ```php
 // web.php
 
-use App\Http\Controllers\HouseController;
+use App\Http\Controllers\ComicController;
 
-// ...
+// # Rotte home
+Route::get('/', [PageController::class, 'index'])->name('home');
 
-// # Rotte risorsa house
-Route::get('/house', [HouseController::class, 'index'])->name('house.index');
+// # Rotte risorsa comic
+Route::get('/comics', [ComicController::class, 'index'])->name('comic.index');
 ```
 
-Realizzo una funzione contenente la logica del metodo legato in `routes/web.php` dentro il controller `HouseController.php`. Dovremo
+Realizzo una funzione contenente la logica del metodo legato in `routes/web.php` dentro il controller `ComicController.php`. Dovremo
 
-1. importare il modello `House`
+1. importare il modello `Comic`
 2. nel metodo `index()` recuperare tutte gli elementi della tabella e passarli ad una vista
 
 ```php
-// HouseController.php
+// ComicController.php
 
-use App\Models\House;
+use App\Models\Comic;
 
 // ...
 
-class HouseController extends Controller
+class ComicController extends Controller
 {
   public function index()
   {
-    $houses = House::all();
-    return view('house.index', compact('houses'));
+    //Stampa tutti gli elementi all'inizio, metodo statico
+    //$comic = Comic::all();
+
+
+    /*
+    Oppure si può usare il paginate ho una lista di 12 elementi
+    quindi 4 per ogni pagina aggiungi nell'index {{ $comics->links 'pagination::bootstrap-5') }}
+    */
+
+    $comics = Comic::paginate(4);
+    return view('comics.index', compact('comics'));
   }
 }
 ```
 
 ## Creazione di una vista per visualizzare i dati
 
-creo un file `resources\views\house\index.blade.php` e estendo il layout `app.blade.php`.
+creo un file `resources\views\comics\index.blade.php` e estendo il layout `app.blade.php`.
 In un forelse stamperò tutti i dati ricevuti
 
 ```php
@@ -162,16 +170,41 @@ In un forelse stamperò tutti i dati ricevuti
 @section('main-content')
   <section class="container mt-5">
 
-    @forelse($houses as $house)
-      <p>
-        <strong>Type</strong>: {{ $house->type }} <br>
-        <strong>Rooms</strong>: {{ $house->rooms }} <br>
-        <strong>Bathrooms</strong>: {{ $house->bathrooms }}
-      </p>
-      <hr>
-    @empty
-      <h2>Non ci sono risultati</h2>
-    @endforelse
+    <table class="table my-5">
+                <thead>
+                    <tr>
+                        <th scope="col">Id:</th>
+                        <th scope="col">Titolo:</th>
+                        <th scope="col">Serie:</th>
+                        <th scope="col">Genere:</th>
+                        <th scope="col">Data di acquisto:</th>
+                        <th scope="col">Prezzo:</th>
+                        <th scope="col">D-T-M:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($comics as $comic)
+                        <tr>
+                            <th scope="row">{{ $comic->id }}</th>
+                            <td>{{ $comic->title }}</td>
+                            <td>{{ $comic->series }}</td>
+                            <td>{{ $comic->type }}</td>
+                            <td>{{ $comic->sale_date }}</td>
+                            <td>${{ $comic->price }}</td>
+                            <td style="min-width: 100px">
+                                <a href={{ route('comics.show', $comic) }}><i class="fa-solid fa-eye"></i></a>
+                                <a href={{ route('comics.edit', $comic) }}><i
+                                        class="fa-solid text-warning fa-pen-to-square px-2"></i></a>
+                                <!-- Button trigger modal -->
+                                <a href="#" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#delete-modal-{{ $comic->id }}">
+                                    <i class="fa-solid text-danger fa-trash-can"></i>
+                                </a>
+
+                            </td>
+                        </tr>
+                      </tbody>
+                    </table>
   </section>
 @endsection
 

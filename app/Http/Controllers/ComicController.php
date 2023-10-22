@@ -119,7 +119,7 @@ class ComicController extends Controller
             $data,
             [
                 'title' => 'required|string|max:50',
-                'description' => 'string',
+                'description' => 'nullable|string',
                 'thumb' => 'required|url',
                 'price' => 'required|numeric|between:0,99.99',
                 'series' => 'required|string|max:50',
