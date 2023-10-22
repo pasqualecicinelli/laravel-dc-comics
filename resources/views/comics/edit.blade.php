@@ -86,9 +86,9 @@
 
             <button class="btn btn-success my-3">Salva</button>
 
+            <a href="{{ route('comics.index') }}" class="btn btn-primary my-3">Torna ai Fumetti</a>
         </form>
 
-        <a href="{{ route('comics.index') }}" class="btn btn-primary my-3">Torna ai Fumetti</a>
 
     </section>
 @endsection

@@ -9,7 +9,7 @@
 
         <table class="table table-striped">
 
-            <table class="table">
+            <table class="table my-5">
                 <thead>
                     <tr>
                         <th scope="col">Id:</th>
@@ -77,12 +77,13 @@
                 </tbody>
             </table>
 
+            {{ $comics->links('pagination::bootstrap-5') }}
 
             <div class="d-flex flex-column">
-                <h5>*Legenda D-T-M</h5>
-                <span>Per vedere tutti i dettagli del fumetto: <i class="fa-solid text-primary fa-eye"></i></span>
-                <span>Per modificare un fumetto: <i class="fa-solid text-warning fa-pen-to-square px-2"></i></span>
-                <span>Per eliminare un fumetto: <i class="fa-solid text-danger fa-trash-can"></i></span>
+                <h5>*Leggenda D-T-M</h5>
+                <span>Mostra i dettagli del fumetto: <i class="fa-solid text-primary fa-eye"></i></span>
+                <span>Modifica un fumetto: <i class="fa-solid text-warning fa-pen-to-square px-2"></i></span>
+                <span>Elimina un fumetto: <i class="fa-solid text-danger fa-trash-can"></i></span>
 
             </div>
 
