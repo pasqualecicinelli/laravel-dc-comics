@@ -49,6 +49,7 @@
 
             </div>
 
+
             <label for="series" class="mt-4">Serie</label>
             <input class="form-control mt-2 @error('series') is-invalid @enderror" type="text" id="series"
                 name="series" placeholder="Serie" aria-label="default input example"
